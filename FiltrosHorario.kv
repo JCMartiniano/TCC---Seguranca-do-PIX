@@ -1,0 +1,102 @@
+<MyLayout>
+	GridLayout:
+		cols: 1
+		canvas.before: 
+			Color:
+				rgba: (0,23/255,65/255,1)
+			Rectangle: 
+				pos: self.pos
+				size: self.size
+		size: root.width, root.height
+		padding: 50
+		spacing: 20
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 2
+			padding: 10
+			
+			FloatLayout:
+				size_hint: (0.5,1)
+				cols: 1
+				Label:
+					text: "19:00 - 06:30"
+					font_size: 15
+					size_hint: (1, None)
+					height: self.parent.height*0.3
+					markup: True
+					pos_hint: {"right" : 0.72, "top" : 0.9}
+				Label:
+					text: "R$ 70,00"
+					font_size: 25
+					size_hint: (1, None)
+					height: self.parent.height*0.2
+					markup: True
+					pos_hint: {"right" : 0.75, "top" : .6}
+
+			BoxLayout:
+				spacing: 5
+				size_hint: (0.5,1)
+				orientation: 'horizontal'
+
+				Button:
+					text: "C"
+					size_hint_y: 1
+					size_hint_x: 0.5
+
+				Button:
+					text: "D"
+					size_hint_y: 1
+					size_hint_x: 0.5
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 2
+			padding: 10
+			
+			FloatLayout:
+				size_hint: (0.5,1)
+				cols: 1
+				Label:
+					text: "19:00 - 06:30"
+					font_size: 15
+					size_hint: (1, None)
+					height: self.parent.height*0.3
+					markup: True
+					pos_hint: {"right" : 0.72, "top" : 0.9}
+				Label:
+					text: "R$ 70,00"
+					font_size: 25
+					size_hint: (1, None)
+					height: self.parent.height*0.2
+					markup: True
+					pos_hint: {"right" : 0.75, "top" : .6}
+
+			BoxLayout:
+				spacing: 5
+				size_hint: (0.5,1)
+				orientation: 'horizontal'
+
+				Button:
+					text: "C"
+					size_hint_y: 1
+					size_hint_x: 0.5
+
+				Button:
+					text: "D"
+					size_hint_y: 1
+					size_hint_x: 0.5

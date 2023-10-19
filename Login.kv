@@ -1,0 +1,71 @@
+ #Menos prioridade do que as caracteristicas individuais
+<Button>
+	font_size: 20
+
+<Label>
+	size_hint_x: (1)
+	size_hint_y: None
+	height: 75
+
+<MyLayout>
+	AnchorLayout:
+		#Mudar cor do background, tem prioridade
+		canvas.before: 
+			Color:
+				rgba: (0,23/255,65/255,1)
+			Rectangle: 
+				pos: self.pos
+				size: self.size
+		size:self.parent.size
+		anchor_x:'center'
+		BoxLayout:
+			orientation: "vertical"
+			size: root.width, root.height
+
+			spacing: 20 #espaço entre os elementos
+			padding: 50 #espaço entre as bordas
+
+	
+
+
+			Label:
+				id: labelCPF
+				text: "CPF:"
+				font_size: 20
+				size_hint: (None,None)
+				markup: True
+				size: self.texture_size
+
+			TextInput:
+				id: textbox1
+				multiline: False
+				font_size: 20
+				size_hint_x: (1)
+				size_hint_y: None
+				height: 40
+
+			Label:
+				id: labelSenha
+				text: "Senha:"
+				font_size: 20
+				size_hint: (None,None)
+				markup: True
+				size: self.texture_size
+
+			TextInput:
+				id: textbox1
+				multiline: False
+				font_size: 20
+				size_hint_x: (1)
+				size_hint_y: None
+				height: 40
+			
+			Button:
+				text: "Login"
+				#size_hint: (.5,.5) #proporção por porcentagem. Size_hint tem prioridade
+				size_hint_x: (1)
+				#Tem que ser None para mudar o tamanho manualmente
+				size_hint_y: None
+				height: 75
+				pos_hint: {'center_y': .75} #posição
+				on_press: root.press()

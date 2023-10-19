@@ -1,0 +1,31 @@
+<MyLayout>
+	GridLayout:
+		cols: 1
+		canvas.before: 
+			Color:
+				rgba: (0,23/255,65/255,1)
+			Rectangle: 
+				pos: self.pos
+				size: self.size
+		size: root.width, root.height
+
+		spacing: 20 #espaço entre os elementos
+		padding: 50 #espaço entre as bordas
+		
+		Button:
+			text: "FILTRO POR LOCALIZAÇÃO"
+			#size_hint: (.5,.5) #proporção por porcentagem. Size_hint tem prioridade
+			size_hint_x: (1)
+			#Tem que ser None para mudar o tamanho manualmente
+			size_hint_y: None
+			height: 75
+			pos_hint: {'center_y': .75} #posição
+
+		Button:
+			text: "FILTRO POR HORÁRIO"
+			#size_hint: (.5,.5) #proporção por porcentagem. Size_hint tem prioridade
+			size_hint_x: (1)
+			#Tem que ser None para mudar o tamanho manualmente
+			size_hint_y: None
+			height: 75
+			pos_hint: {'center_y': .75} #posição
