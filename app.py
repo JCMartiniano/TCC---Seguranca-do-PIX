@@ -17,14 +17,36 @@ class TelaLogin(Screen):
 		self.manager.transition.direction = "left"
 
 class TelaMenu(Screen):
-	def SelectTimeFilter(self):		
+	def TimeFilterMenu(self):		
 		self.manager.current = "ListaFiltrosHorario"
+		self.manager.transition.direction = "left"
+
+	def LocalFilterMenu(self):		
+		self.manager.current = "ListaFiltrosLocal"
+		self.manager.transition.direction = "left"
+
+	def SelectPixScreen(self):		
+		self.manager.current = "TelaPix"
 		self.manager.transition.direction = "left"
 
 class ListaFiltrosHorario(Screen):
 	def SelectTimeFilter(self):		
-		self.manager.current = "ListaFiltrosHorario"
+		self.manager.current = "FiltroHorario"
 		self.manager.transition.direction = "left"
+
+class FiltroHorario(Screen):
+	pass
+
+class ListaFiltrosLocal(Screen):
+	def SelectLocalFilter(self):		
+		self.manager.current = "FiltroLocal"
+		self.manager.transition.direction = "left"
+
+class FiltroLocal(Screen):	
+	pass
+
+class TelaPix(Screen):
+	pass
 
 class WindowManager(ScreenManager):
 	pass

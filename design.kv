@@ -1,8 +1,33 @@
-#: import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import Factory kivy.factory.Factory
+<PopupPIX@Popup>
+	auto_dismiss: True
+	title: "Transação recusada"
+	size_hint: 0.8,0.2
+	pos_hint: {"x":0.1, "top": 0.9}
+	BoxLayout:
+		spacing: 5
+		size_hint: (1,None)
+		orientation: 'vertical'
+
+		Label:
+			text: "O valor excede o máximo para este período"
+			font_size: 18
+			multiline: True
+			markup: True
+
+		Button:
+			text: "Fechar"
+			font_size: 15
+			on_release: root.dismiss()
+
 WindowManager:
 	TelaLogin:
 	TelaMenu:
 	ListaFiltrosHorario:
+	FiltroHorario:
+	ListaFiltrosLocal:
+	FiltroLocal:
+	TelaPix:
 
 <TelaLogin>:
 	name: "TelaLogin"
@@ -68,7 +93,6 @@ WindowManager:
 				pos_hint: {'center_y': .75} #posição
 				on_release: root.LoginButton()
 
-
 <TelaMenu>:
 	name: "TelaMenu"
 	GridLayout:
@@ -83,6 +107,12 @@ WindowManager:
 
 		spacing: 20 #espaço entre os elementos
 		padding: 50 #espaço entre as bordas
+		Label:
+			text: "MENU"
+			font_size: 20
+			size_hint: (1,None)
+			markup: True
+			size: self.texture_size
 		
 		Button:
 			text: "FILTRO POR LOCALIZAÇÃO"
@@ -92,6 +122,7 @@ WindowManager:
 			size_hint_y: None
 			height: 75
 			pos_hint: {'center_y': .75} #posição
+			on_release: root.LocalFilterMenu()
 
 		Button:
 			text: "FILTRO POR HORÁRIO"
@@ -101,7 +132,17 @@ WindowManager:
 			size_hint_y: None
 			height: 75
 			pos_hint: {'center_y': .75} #posição
-			on_release: root.SelectTimeFilter()
+			on_release: root.TimeFilterMenu()
+
+		Button:
+			text: "REALIZAR PIX"
+			#size_hint: (.5,.5) #proporção por porcentagem. Size_hint tem prioridade
+			size_hint_x: (1)
+			#Tem que ser None para mudar o tamanho manualmente
+			size_hint_y: None
+			height: 75
+			pos_hint: {'center_y': .75} #posição
+			on_release: root.SelectPixScreen()
 
 <ListaFiltrosHorario>
 	name: "ListaFiltrosHorario"
@@ -117,50 +158,12 @@ WindowManager:
 		padding: 50
 		spacing: 20
 
-		GridLayout:
-			canvas.before: 
-				Color:
-					rgba: (0,37/255,102/255,1)
-				Rectangle: 
-					pos: self.pos
-					size: self.size
+		Label:
+			text: "Filtros por horário"
+			font_size: 20
 			size_hint: (1,None)
-			height: 100
-			cols: 2
-			padding: 10
-			
-			FloatLayout:
-				size_hint: (0.5,1)
-				cols: 1
-				Label:
-					text: "19:00 - 06:30"
-					font_size: 15
-					size_hint: (1, None)
-					height: self.parent.height*0.3
-					markup: True
-					pos_hint: {"right" : 0.72, "top" : 0.9}
-				Label:
-					text: "R$ 70,00"
-					font_size: 25
-					size_hint: (1, None)
-					height: self.parent.height*0.2
-					markup: True
-					pos_hint: {"right" : 0.75, "top" : .6}
-
-			BoxLayout:
-				spacing: 5
-				size_hint: (0.5,1)
-				orientation: 'horizontal'
-
-				Button:
-					text: "C"
-					size_hint_y: 1
-					size_hint_x: 0.5
-
-				Button:
-					text: "D"
-					size_hint_y: 1
-					size_hint_x: 0.5
+			markup: True
+			size: self.texture_size
 
 		GridLayout:
 			canvas.before: 
@@ -198,11 +201,508 @@ WindowManager:
 				orientation: 'horizontal'
 
 				Button:
-					text: "C"
+					text: "Editar"
 					size_hint_y: 1
 					size_hint_x: 0.5
+					on_release: root.SelectTimeFilter()
+
+				Button:
+					text: "Deletar"
+					size_hint_y: 1
+					size_hint_x: 0.5
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 2
+			padding: 10
+			
+			Button:
+				text: "+"
+				size_hint_y: 1
+				size_hint_x: 0.5
+
+<FiltroHorario>
+	name: "FiltroHorario"
+	GridLayout:
+		cols: 1
+		canvas.before: 
+			Color:
+				rgba: (0,23/255,65/255,1)
+			Rectangle: 
+				pos: self.pos
+				size: self.size
+		size: root.width, root.height
+		padding: 50
+		spacing: 50
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 1
+			padding: 10
+			
+			Label:
+				text: "Dias da semana"
+				font_size: 20
+				size: self.texture_size
+
+
+			BoxLayout:
+				spacing: 5
+				size_hint: (0.5,1)
+				orientation: 'horizontal'
 
 				Button:
 					text: "D"
 					size_hint_y: 1
 					size_hint_x: 0.5
+
+				Button:
+					text: "S"
+					size_hint_y: 1
+					size_hint_x: 0.5
+
+				Button:
+					text: "T"
+					size_hint_y: 1
+					size_hint_x: 0.5
+
+				Button:
+					text: "Q"
+					size_hint_y: 1
+					size_hint_x: 0.5
+
+				Button:
+					text: "Q"
+					size_hint_y: 1
+					size_hint_x: 0.5
+
+				Button:
+					text: "S"
+					size_hint_y: 1
+					size_hint_x: 0.5
+
+				Button:
+					text: "S"
+					size_hint_y: 1
+					size_hint_x: 0.5
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 1
+			padding: 10
+
+			BoxLayout:
+				spacing: 5
+				size_hint: (0.5,1)
+				orientation: 'vertical' 
+
+				Label:
+					text: "Horário inicial"
+					font_size: 20
+					size: self.texture_size
+
+				TextInput:
+					id: textHorarioInicial
+					multiline: False
+					font_size: 20
+					size_hint_x: (1)
+					size_hint_y: None
+					height: 40
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 1
+			padding: 10
+
+			BoxLayout:
+				spacing: 5
+				size_hint: (0.5,1)
+				orientation: 'vertical' 
+
+				Label:
+					text: "Horário final"
+					font_size: 20
+					size: self.texture_size
+
+				TextInput:
+					id: textHorarioInicial
+					multiline: False
+					font_size: 20
+					size_hint_x: (1)
+					size_hint_y: None
+					height: 40
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 1
+			padding: 10
+
+			BoxLayout:
+				spacing: 5
+				size_hint: (0.5,1)
+				orientation: 'vertical' 
+
+				Label:
+					text: "Valor"
+					font_size: 20
+					size: self.texture_size
+
+				TextInput:
+					id: textHorarioInicial
+					multiline: False
+					font_size: 20
+					size_hint_x: (1)
+					size_hint_y: None
+					height: 40
+
+		BoxLayout:
+			spacing: 5
+			size_hint: (1,0.3)
+			orientation: 'horizontal'
+
+			Button:
+				text: "Salvar"
+				size_hint_y: 1
+				size_hint_x: 0.5
+
+			Button:
+				text: "Cancelar"
+				size_hint_y: 1
+				size_hint_x: 0.5
+
+			Button:
+				text: "Deletar"
+				size_hint_y: 1
+				size_hint_x: 0.5
+
+<ListaFiltrosLocal>
+	name: "ListaFiltrosLocal"
+	GridLayout:
+		cols: 1
+		canvas.before: 
+			Color:
+				rgba: (0,23/255,65/255,1)
+			Rectangle: 
+				pos: self.pos
+				size: self.size
+		size: root.width, root.height
+		padding: 50
+		spacing: 20
+
+		Label:
+			text: "Filtros por localização"
+			font_size: 20
+			size_hint: (1,None)
+			markup: True
+			size: self.texture_size
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 2
+			padding: 10
+			
+			FloatLayout:
+				size_hint: (0.5,1)
+				cols: 1
+				Label:
+					text: "Filtro 1"
+					font_size: 15
+					size_hint: (1, None)
+					height: self.parent.height*0.3
+					markup: True
+					pos_hint: {"right" : 0.62, "top" : 0.9}
+				Label:
+					text: "R$ 70,00"
+					font_size: 25
+					size_hint: (1, None)
+					height: self.parent.height*0.2
+					markup: True
+					pos_hint: {"right" : 0.75, "top" : .6}
+
+			BoxLayout:
+				spacing: 5
+				size_hint: (0.5,1)
+				orientation: 'horizontal'
+
+				Button:
+					text: "Editar"
+					size_hint_y: 1
+					size_hint_x: 0.5
+					on_release: root.SelectLocalFilter()
+
+				Button:
+					text: "Deletar"
+					size_hint_y: 1
+					size_hint_x: 0.5
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 2
+			padding: 10
+			
+			Button:
+				text: "+"
+				size_hint_y: 1
+				size_hint_x: 0.5
+
+<FiltroLocal>
+	name: "FiltroLocal"
+	GridLayout:
+		cols: 1
+		canvas.before: 
+			Color:
+				rgba: (0,23/255,65/255,1)
+			Rectangle: 
+				pos: self.pos
+				size: self.size
+		size: root.width, root.height
+		padding: 50
+		spacing: 50		
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,1)
+			cols: 1
+			padding: 10
+
+			BoxLayout:
+				spacing: 5
+				size_hint: (0.5,1)
+				orientation: 'vertical' 
+
+				Label:
+					text: "Local"
+					font_size: 20
+					size: self.texture_size
+
+				Image: 
+					source: "imagens/mapa.jpeg"
+					keep_ratio: True
+					size_hint: (1,None)
+					height: 250
+
+				Label:
+					text: "Digite o local"
+					font_size: 20
+					size: self.texture_size
+
+
+				TextInput:
+					id: textHorarioInicial
+					multiline: False
+					font_size: 20
+					size_hint_x: (1)
+					size_hint_y: None
+					height: 40
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 1
+			padding: 10
+
+			BoxLayout:
+				spacing: 5
+				size_hint: (0.5,1)
+				orientation: 'vertical' 
+
+				Label:
+					text: "Valor"
+					font_size: 20
+					size: self.texture_size
+
+				TextInput:
+					id: textHorarioInicial
+					multiline: False
+					font_size: 20
+					size_hint_x: (1)
+					size_hint_y: None
+					height: 40
+
+		BoxLayout:
+			spacing: 5
+			size_hint: (1,0.25)
+			orientation: 'horizontal'
+
+			Button:
+				text: "Salvar"
+				size_hint_y: 1
+				size_hint_x: 0.5
+
+			Button:
+				text: "Cancelar"
+				size_hint_y: 1
+				size_hint_x: 0.5
+
+			Button:
+				text: "Deletar"
+				size_hint_y: 1
+				size_hint_x: 0.5
+
+<TelaPix>
+	name: "TelaPix"
+	GridLayout:
+		cols: 1
+		canvas.before: 
+			Color:
+				rgba: (0,23/255,65/255,1)
+			Rectangle: 
+				pos: self.pos
+				size: self.size
+		size: root.width, root.height
+		padding: 50
+		spacing: 50
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 1
+			padding: 10
+			
+			Label:
+				text: "Saldo da conta"
+				font_size: 20
+				size_hint: (None,None)
+				size: self.texture_size
+
+			Label:
+				text: "R$ 353,35"
+				font_size: 50
+				size: self.texture_size
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 1
+			padding: 10
+
+			BoxLayout:
+				spacing: 5
+				size_hint: (0.5,1)
+				orientation: 'vertical' 
+
+				Label:
+					text: "Chave"
+					font_size: 20
+					size: self.texture_size
+
+				TextInput:
+					id: textHorarioInicial
+					multiline: False
+					font_size: 20
+					size_hint_x: (1)
+					size_hint_y: None
+					height: 40
+
+		GridLayout:
+			canvas.before: 
+				Color:
+					rgba: (0,37/255,102/255,1)
+				Rectangle: 
+					pos: self.pos
+					size: self.size
+			size_hint: (1,None)
+			height: 100
+			cols: 1
+			padding: 10
+
+			BoxLayout:
+				spacing: 5
+				size_hint: (0.5,1)
+				orientation: 'vertical' 
+
+				Label:
+					text: "Valor"
+					font_size: 20
+					size: self.texture_size
+
+				TextInput:
+					id: textHorarioInicial
+					multiline: False
+					font_size: 20
+					size_hint_x: (1)
+					size_hint_y: None
+					height: 40
+
+		BoxLayout:
+			spacing: 5
+			size_hint: (1,None)
+			orientation: 'horizontal'
+
+			Button:
+				text: "Realizar"
+				size_hint_y: 1
+				size_hint_x: 0.5
+				on_release: Factory.PopupPIX().open()
